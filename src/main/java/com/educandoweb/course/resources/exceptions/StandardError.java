@@ -5,19 +5,23 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+// Classe padrão para mensagens de erro em respostas HTTP
 public class StandardError implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	// Define o formato da data exibida no timestamp das requisições que resultam em erro
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant timestamp;
-	private Integer status;
-	private String error;
-	private String message;
-	private String path;
+	private Instant timestamp; // Momento do erro ocorrido
+	private Integer status; // Status code HTTP do erro
+	private String error; // Tipo do erro
+	private String message; // Mensagem do erro
+	private String path; // Caminho da requisição que resultou no erro
 	
+	// Construtor padrão
 	public StandardError() {}
 
+	// Construtor com parâmetros
 	public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
 		super();
 		this.timestamp = timestamp;
@@ -27,6 +31,7 @@ public class StandardError implements Serializable{
 		this.path = path;
 	}
 
+	// Getters e Setters
 	public Instant getTimestamp() {
 		return timestamp;
 	}

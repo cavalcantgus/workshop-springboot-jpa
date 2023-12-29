@@ -17,30 +17,36 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "tb_product")
+@Entity // Indica que a classe é uma entidade JPA
+@Table(name = "tb_product") // Especifica o nome da tabela no banco de dados
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id // Indica que a variável id é a chave primária
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Estratégia de geração de valores para a chave primária
 	private Long id;
 	private String name;
 	private String description;
 	private Double price;
 	private String imgUrl;
-
-	@ManyToMany
+ 
+	@ManyToMany // Relação muitos para muitos entre Product e Category
+	
+	// Especifica a tabela de associação entre Product e Category que será criada no banco de dados
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 	
-	@OneToMany(mappedBy = "id.product")
+	@OneToMany(mappedBy = "id.product") /* Relação um para muitos entre Product e OrderItem - mappedBy define
+	o nome do atributo na entidade OrderItem que se relaciona com Product, criando a chave estrangeira "product_id" */
+	
 	private Set<OrderItem> itens = new HashSet<>();
 	
+	// Construtor padrão
 	public Product() {
 	}
 
+	// Construtor com parâmetros
 	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		super();
 		this.id = id;
@@ -50,6 +56,7 @@ public class Product implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
+	// Getters e Setters
 	public Long getId() {
 		return id;
 	}
@@ -94,6 +101,7 @@ public class Product implements Serializable {
 		return categories;
 	}
 
+	// Retorna um conjunto de pedidos associado a um produto
 	public Set<Order> getOrders(){
 		Set<Order> set = new HashSet<>();
 		for(OrderItem x : itens) {
@@ -102,6 +110,7 @@ public class Product implements Serializable {
 		return set;
 	}
 	
+    // Métodos equals e hashCode para comparar instâncias de Product com base no id
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

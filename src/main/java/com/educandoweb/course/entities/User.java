@@ -14,26 +14,30 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "tb_user")
+@Entity // Indica que a classe é uma entidade JPA
+@Table(name = "tb_user") // Especifica o nome da tabela no banco de dados
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id // Indica que a variável id é a chave primária
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Estratégia de geração de valores para a chave primária
 	private Long id;
 	private String name;
 	private String email;
 	private String phone;
 	private String password;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "client")
+	@JsonIgnore // Evita a recursão ao buscar pedidos associados
+	@OneToMany(mappedBy = "client") /* Relacionamento um para muitos com a entidade Order - mappedBy especifica o 
+									nome do atributo na entidade Order que mantém a relação*/
+	
 	private List<Order> orders = new ArrayList<>();
 	
+	// Construtor padrão
 	public User() {}
 
+	// Construtor com parâmetros
 	public User(Long id, String name, String email, String phone, String password) {
 		super();
 		this.id = id;
@@ -42,7 +46,8 @@ public class User implements Serializable{
 		this.phone = phone;
 		this.password = password;
 	}
-
+ 
+	// Getters e Setters
 	public Long getId() {
 		return id;
 	}
@@ -91,7 +96,8 @@ public class User implements Serializable{
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
+    // Métodos equals e hashCode para comparar instâncias de User com base no id
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

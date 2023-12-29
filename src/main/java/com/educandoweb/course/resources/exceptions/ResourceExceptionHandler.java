@@ -15,19 +15,21 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	
+	// Trata exceções do tipo Resource Not Found
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
-		String error = "Resource not found";
-		HttpStatus status = HttpStatus.NOT_FOUND;
+		String error = "Resource not found"; // Mensagem de erro 
+		HttpStatus status = HttpStatus.NOT_FOUND; // Status code HTPP 404
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
-		return ResponseEntity.status(status).body(err);
+		return ResponseEntity.status(status).body(err); // Retorna a resposta HTTP contendo informações de erro
 	}
 	
+	// Trata exceções do tipo Exception Handler
 	@ExceptionHandler(DatabaseException.class)
 	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
-		String error = "Database error";
-		HttpStatus status = HttpStatus.BAD_REQUEST;
+		String error = "Database error"; // Mensagem de erro
+		HttpStatus status = HttpStatus.BAD_REQUEST; // Status code HTPP 400
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
-		return ResponseEntity.status(status).body(err);
+		return ResponseEntity.status(status).body(err); // Retorna a resposta HTTP contendo informações de erro
 	}
 }

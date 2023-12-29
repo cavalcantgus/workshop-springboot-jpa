@@ -10,19 +10,20 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Embeddable
+@Embeddable // A classe pode ser incorporada em outras entidades - permite uma representaçao de chave primária composta
 public class OrderItemPK implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToOne
-	@JoinColumn(name = "order_id")
+	@ManyToOne // Relação muitos pra um com a entidade Order
+	@JoinColumn(name = "order_id") // Indica o nome da coluna a qual se associa a relação
 	private Order order;
 	
-	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@ManyToOne // Relação muitos pra um com a entidade Product
+	@JoinColumn(name = "product_id") // Indica o nome da coluna a qual se associa a relação
 	private Product product;
 	
+	// Getters e Setters
 	public Order getOrder() {
 		return order;
 	}
@@ -44,6 +45,7 @@ public class OrderItemPK implements Serializable{
 		return Objects.hash(order, product);
 	}
 	
+    // Métodos equals e hashCode para comparar instâncias de OrderItemPK com base no order e product
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
