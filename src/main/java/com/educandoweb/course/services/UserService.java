@@ -31,6 +31,7 @@ public class UserService {
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
+	// Insere e salva um novo usuário
 	public User insert(User obj) {
 		return repository.save(obj);
 	}

@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,16 +17,22 @@ import jakarta.persistence.Table;
 
 @Entity // Indica que a classe é uma entidade JPA
 @Table(name = "tb_user") // Especifica o nome da tabela no banco de dados
+@Schema(description = "Modelo de inserção de usuário")
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id // Indica que a variável id é a chave primária
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Estratégia de geração de valores para a chave primária
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY, example = "1")
 	private Long id;
+	@Schema(example = "Maria")
 	private String name;
+	@Schema(example = "maria@gmail.com")
 	private String email;
+	@Schema(example = "98958992311")
 	private String phone;
+	@Schema(example = "123457")
 	private String password;
 	
 	@JsonIgnore // Evita a recursão ao buscar pedidos associados
