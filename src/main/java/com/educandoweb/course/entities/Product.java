@@ -28,18 +28,21 @@ public class Product implements Serializable {
 	private String description;
 	private Double price;
 	private String imgUrl;
- 
+
 	@ManyToMany // Relação muitos para muitos entre Product e Category
-	
+
 	// Especifica a tabela de associação entre Product e Category que será criada no banco de dados
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
-	
-	@OneToMany(mappedBy = "id.product") /* Relação um para muitos entre Product e OrderItem - mappedBy define
-	o nome do atributo na entidade OrderItem que se relaciona com Product, criando a chave estrangeira "product_id" */
-	
+
+	/*
+	 * Relação um para muitos entre Product e OrderItem - mappedBy define o nome do
+	 * atributo na entidade OrderItem que se relaciona com Product, criando a chave
+	 * estrangeira "product_id"
+	 */
+	@OneToMany(mappedBy = "id.product") 
 	private Set<OrderItem> itens = new HashSet<>();
-	
+
 	// Construtor padrão
 	public Product() {
 	}
@@ -100,15 +103,15 @@ public class Product implements Serializable {
 	}
 
 	// Retorna um conjunto de pedidos associado a um produto
-	public Set<Order> getOrders(){
+	public Set<Order> getOrders() {
 		Set<Order> set = new HashSet<>();
-		for(OrderItem x : itens) {
+		for (OrderItem x : itens) {
 			set.add(x.getOrder());
 		}
 		return set;
 	}
-	
-    // Métodos equals e hashCode para comparar instâncias de Product com base no id
+
+	// Métodos equals e hashCode para comparar instâncias de Product com base no id
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
